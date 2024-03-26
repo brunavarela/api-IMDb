@@ -14,6 +14,8 @@ const verifyAuthTokenMiddleware = (request, response, next) => {
       return response.status(401).json({ message: "Token inválido" });
     }
 
+    request.isAdmin = decoded.isAdmin;
+
     next();
   });
 };

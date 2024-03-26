@@ -8,6 +8,7 @@ import userLoginController from "../controllers/userLogin.controller.js";
 
 import verifyEmailAvailabilityMiddleware from "../middlewares/verifyEmailAvailability.middleware.js";
 import verifyAuthTokenMiddleware from "../middlewares/verifyAuthToken.middleware.js";
+import verifyIsAdminMiddleware from "../middlewares/verifyIsAdmin.middleware.js";
 
 const router = Router();
 
