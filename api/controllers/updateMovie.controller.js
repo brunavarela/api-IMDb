@@ -1,7 +1,7 @@
 import updateMovieService from "../services/updateMovie.service.js";
 
 const updateMovieController = (request, response) => {
-  const { owner_id } = request.params;
+  const { movie_id } = request.params;
   const { title, director, actors, genre, resume } = request.body;
 
   const updateMovie = updateMovieService(
@@ -10,7 +10,7 @@ const updateMovieController = (request, response) => {
     actors,
     genre,
     resume,
-    owner_id
+    movie_id
   );
 
   return response.json(updateMovie);

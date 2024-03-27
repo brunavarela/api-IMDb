@@ -17,7 +17,17 @@ router.post(
   createMovieController
 );
 router.get("", listMovieController);
-router.put("/:id", verifyAuthTokenMiddleware, updateMovieController);
-router.delete("/:id", verifyAuthTokenMiddleware, deleteMovieController);
+router.put(
+  "/:id",
+  verifyAuthTokenMiddleware,
+  verifyIsAdminMiddleware,
+  updateMovieController
+);
+router.delete(
+  "/:id",
+  verifyAuthTokenMiddleware,
+  verifyIsAdminMiddleware,
+  deleteMovieController
+);
 
 export default router;

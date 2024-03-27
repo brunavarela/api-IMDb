@@ -6,7 +6,7 @@ const updateMovieService = (
   actors,
   genre,
   resume,
-  owner_id
+  movie_id
 ) => {
   const updateMovie = {
     title,
@@ -14,10 +14,10 @@ const updateMovieService = (
     actors,
     genre,
     resume,
-    owner_id,
+    movie_id,
   };
 
-  const movieIndex = movies.findIndex((element) => element.id === owner_id);
+  const movieIndex = movies.findIndex((element) => element.id === movie_id);
 
   if (movieIndex === -1) {
     return "Filme não encontrado";

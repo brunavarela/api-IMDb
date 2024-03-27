@@ -14,8 +14,8 @@ const router = Router();
 
 router.post("", verifyEmailAvailabilityMiddleware, createUserController);
 router.get("", listUsersController);
-router.put("/:id", verifyAuthTokenMiddleware, updateUserController);
-router.delete("/:id", verifyAuthTokenMiddleware, deleteUserController);
+router.put("/:id", verifyAuthTokenMiddleware, verifyIsAdminMiddleware, updateUserController);
+router.delete("/:id", verifyAuthTokenMiddleware, verifyIsAdminMiddleware, deleteUserController);
 router.post("/login", userLoginController);
 
 export default router;

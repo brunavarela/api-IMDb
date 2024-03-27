@@ -1,7 +1,7 @@
 import movies from "../database/movies.js";
 
-const deleteMovieService = (owner_id) => {
-  const movieIndex = movies.findIndex((element) => element.id === owner_id);
+const deleteMovieService = (movie_id) => {
+  const movieIndex = movies.findIndex((element) => element.id === movie_id);
 
   if (movieIndex === -1) {
     return "Filme não encontrado";
