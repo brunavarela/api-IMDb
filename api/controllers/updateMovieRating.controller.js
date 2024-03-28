@@ -1,24 +1,23 @@
-import {
-  updateMovieRating,
-  getMovieById,
-} from "../services/updateMovieRating.service.js";
+import updateMovieRatingService from "../services/updateMovieRating.service.js";
 
-const updateMovieRatingController = (request, response) => {
-  const { movie_id, rating } = request.body;
-  const movie = updateMovieRating(movie_id, rating);
-  if (movie) {
-    return response.json(movie);
+const updateMovieRatingController = async (request, response) => {
+  try {
+    const { movie_id } = request.params;
+    const { rating } = request.body;
+
+    const result = await updateMovieRatingService(movie_id, rating);
+
+    if (result.affectedRows > 0) {
+      return response
+        .status(200)
+        .json({ message: "Rating do filme atualizado com sucesso" });
+    } else {
+      return response.status(404).json({ message: "Filme não encontrado" });
+    }
+  } catch (error) {
+    console.error("Erro no controlador:", error);
+    return response.status(500).json({ error: "Erro interno do servidor" });
   }
-  return response.status(404).json({ message: "Filme não encontrado" });
 };
 
-const getMovieRatingController = (request, response) => {
-  const { movie_id } = request.params;
-  const movie = getMovieById(movie_id);
-  if (movie) {
-    return response.json({ rating: movie.rating });
-  }
-  return response.status(404).json({ message: "Filme não encontrado" });
-};
-
-export { updateMovieRatingController, getMovieRatingController };
+export default updateMovieRatingController;

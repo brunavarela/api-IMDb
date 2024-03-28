@@ -1,16 +1,27 @@
-import movies from "../database/movies.js";
+import { pool as mysql } from "../database/mysql.js";
 
-const updateMovieRating = (movie_id, rating) => {
-  const movieIndex = movies.findIndex((movie) => movie.id === movie_id);
-  if (movieIndex !== -1) {
-    movies[movieIndex].rating = rating;
-    return movies[movieIndex];
-  }
-  return null;
+const updateMovieRatingService = (movie_id, rating) => {
+  return new Promise((resolve, reject) => {
+    mysql.getConnection((error, conn) => {
+      if (error) {
+        console.error("Erro ao obter conexão:", error);
+        return reject(error);
+      }
+
+      conn.query(
+        "UPDATE movies SET rating = ? WHERE movie_id = ?",
+        [rating, movie_id],
+        (error, result) => {
+          conn.release();
+          if (error) {
+            console.error("Erro ao atualizar a nota do filme:", error);
+            return reject(error);
+          }
+          resolve(result);
+        }
+      );
+    });
+  });
 };
 
-const getMovieById = (movie_id) => {
-  return movies.find((movie) => movie.id === movie_id);
-};
-
-export { updateMovieRating, getMovieById };
+export default updateMovieRatingService;

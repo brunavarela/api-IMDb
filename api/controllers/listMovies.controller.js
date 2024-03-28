@@ -1,9 +1,13 @@
 import listMoviesService from "../services/listMovies.service.js";
 
-const listMoviesController = (request, response) => {
-  const movies = listMoviesService();
-
-  return response.json(movies);
+const listMovieController = async (request, response) => {
+  try {
+    const movies = await listMoviesService();
+    return response.status(200).json(movies);
+  } catch (error) {
+    console.error("Erro no controlador:", error);
+    return response.status(500).json({ error: "Erro interno do servidor" });
+  }
 };
 
-export default listMoviesController;
+export default listMovieController;

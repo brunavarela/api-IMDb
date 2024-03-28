@@ -6,8 +6,10 @@ import ratingRouter from "./routes/rating.routes.js";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use("/users", usersRouter);
 app.use("/movies", moviesRouter);
 app.use("/", ratingRouter);
-app.listen(3000, () => console.log("App running at http://localhost:3000"));
+
+app.listen(3000);

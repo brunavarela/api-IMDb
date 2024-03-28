@@ -1,20 +1,38 @@
-import movies from "../database/movies.js";
-import { v4 as uuidv4 } from "uuid";
+import { pool as mysql } from "../database/mysql.js";
 
-const createMovieService = (title, director, actors, genre, resume, rating) => {
-  const newMovie = {
+const createMovieService = (title, director, cast, genre, resume) => {
+  console.log("Dados recebidos no serviço:", {
     title,
     director,
-    actors,
+    cast,
     genre,
     resume,
-    rating,
-    movie_id: uuidv4(),
-  };
+  });
 
-  movies.push(newMovie);
+  return new Promise((resolve, reject) => {
+    mysql.getConnection((error, conn) => {
+      if (error) {
+        console.error("Erro ao obter conexão:", error);
+        return reject(error);
+      }
 
-  return newMovie;
+      conn.query(
+        "INSERT INTO movies (title, director, cast, genre, resume) VALUES (?, ?, ?, ?, ?)",
+        [title, director, cast, genre, resume],
+        (error, result, field) => {
+          conn.release();
+          if (error) {
+            console.error("Erro ao inserir filme:", error);
+            return reject(error);
+          }
+          resolve({
+            mensagem: "Filme inserido com sucesso",
+            id_movie: result.insertId,
+          });
+        }
+      );
+    });
+  });
 };
 
 export default createMovieService;

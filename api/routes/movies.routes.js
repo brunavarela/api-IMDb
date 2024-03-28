@@ -18,13 +18,13 @@ router.post(
 );
 router.get("", listMovieController);
 router.put(
-  "/:id",
+  "/:movie_id",
   verifyAuthTokenMiddleware,
   verifyIsAdminMiddleware,
   updateMovieController
 );
 router.delete(
-  "/:id",
+  "/:movie_id",
   verifyAuthTokenMiddleware,
   verifyIsAdminMiddleware,
   deleteMovieController
