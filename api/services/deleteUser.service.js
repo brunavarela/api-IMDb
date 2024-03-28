@@ -1,15 +1,28 @@
-import users from "../database/users.js";
+import { pool as mysql } from "../database/mysql.js";
 
 const deleteUserService = (id) => {
-  const userIndex = users.findIndex((element) => element.id === id);
+  return new Promise((resolve, reject) => {
+    mysql.getConnection((error, conn) => {
+      if (error) {
+        console.error("Erro ao obter conexão:", error);
+        return reject(error);
+      }
 
-  if (userIndex === -1) {
-    return "Usuário não encontrado.";
-  }
+      conn.query("DELETE FROM users WHERE id = ?", [id], (error, result) => {
+        conn.release();
+        if (error) {
+          console.error("Erro ao deletar usuário:", error);
+          return reject(error);
+        }
 
-  users.splice(userIndex, 1);
+        if (result.affectedRows === 0) {
+          return resolve("Usuário não encontrado.");
+        }
 
-  return "Usuário deletado";
+        resolve("Usuário deletado com sucesso.");
+      });
+    });
+  });
 };
 
 export default deleteUserService;
