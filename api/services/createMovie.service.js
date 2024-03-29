@@ -1,13 +1,6 @@
 import { pool as mysql } from "../database/mysql.js";
 
 const createMovieService = (title, director, cast, genre, resume) => {
-  console.log("Dados recebidos no serviço:", {
-    title,
-    director,
-    cast,
-    genre,
-    resume,
-  });
 
   return new Promise((resolve, reject) => {
     mysql.getConnection((error, conn) => {

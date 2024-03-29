@@ -3,13 +3,6 @@ import createMovieService from "../services/createMovie.service.js";
 const createMovieController = async (request, response) => {
   try {
     const { title, director, cast, genre, resume } = request.body;
-    console.log("Dados recebidos no controlador:", {
-      title,
-      director,
-      cast,
-      genre,
-      resume,
-    });
 
     const movie = await createMovieService(
       title,
