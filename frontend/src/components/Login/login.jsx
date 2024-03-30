@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";import {
+import { useNavigate } from "react-router-dom";
+import {
   LoginContainer,
   LoginForm,
   FormGroup,
   Label,
   Input,
   Button,
+  Title,
 } from "./login";
 import axios from "axios";
 
@@ -34,6 +36,7 @@ export const Login = () => {
   return (
     <LoginContainer>
       <LoginForm onSubmit={handleSubmit}>
+        <Title>IMDB-API</Title>
         <FormGroup>
           <Label>Email:</Label>
           <Input
@@ -53,7 +56,7 @@ export const Login = () => {
           />
         </FormGroup>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        <Button type="submit">Login</Button>
+        <Button type="submit">Entrar</Button>
       </LoginForm>
     </LoginContainer>
   );
