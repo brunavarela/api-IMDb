@@ -5,7 +5,10 @@ import moviesRouter from "./routes/movies.routes.js";
 import ratingRouter from "./routes/rating.routes.js";
 
 const app = express();
+import cors from "cors";
+
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/users", usersRouter);
