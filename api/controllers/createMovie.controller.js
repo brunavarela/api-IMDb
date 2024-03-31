@@ -2,7 +2,7 @@ import createMovieService from "../services/createMovie.service.js";
 
 const createMovieController = async (request, response) => {
   try {
-    const { title, director, cast, genre, resume } = request.body;
+    const { title, director, cast, genre, resume, image } = request.body;
 
     const movie = await createMovieService(
       title,
@@ -10,6 +10,7 @@ const createMovieController = async (request, response) => {
       cast,
       genre,
       resume,
+      image
     );
     return response.status(201).json(movie);
   } catch (error) {

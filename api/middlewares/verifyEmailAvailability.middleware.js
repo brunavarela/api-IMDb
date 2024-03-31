@@ -1,36 +1,23 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
 
 const verifyEmailAvailabilityMiddleware = (request, response, next) => {
   const { email } = request.body;
 
-  mysql.getConnection((error, conn) => {
-    if (error) {
-      console.error("Erro ao obter conexão:", error);
-      return response.status(500).json({ message: "Erro interno do servidor" });
-    }
-
-    conn.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-      (error, results) => {
-        conn.release();
-        if (error) {
-          console.error("Erro ao executar consulta:", error);
-          return response
-            .status(500)
-            .json({ message: "Erro interno do servidor" });
-        }
-
-        if (results.length > 0) {
-          return response
-            .status(400)
-            .json({ message: "Esse email já está sendo utilizado" });
-        }
-
-        next();
+  knex("users")
+    .where("email", email)
+    .first()
+    .then((user) => {
+      if (user) {
+        return response
+          .status(400)
+          .json({ message: "Esse email já está sendo utilizado" });
       }
-    );
-  });
+      next();
+    })
+    .catch((error) => {
+      console.error("Erro ao executar consulta:", error);
+      response.status(500).json({ message: "Erro interno do servidor" });
+    });
 };
 
 export default verifyEmailAvailabilityMiddleware;

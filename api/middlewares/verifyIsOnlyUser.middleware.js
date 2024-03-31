@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import knex from "../config/database.js";
 import getUserId from "../functions/getUserId.js";
 
-const verifyIsAdminMiddleware = (request, response, next) => {
+const verifyIsOnlyUserMiddleware = (request, response, next) => {
   const token = request.headers.authorization;
 
   jwt.verify(token, "SECRET_KEY", async (error, decoded) => {
@@ -30,9 +30,9 @@ const verifyIsAdminMiddleware = (request, response, next) => {
 
           const isAdmin = user.isAdmin === 1;
 
-          if (!isAdmin) {
+          if (isAdmin) {
             return response.status(401).json({
-              message: "Apenas administradores podem realizar essa ação.",
+              message: "Apenas usuários podem realizar essa ação.",
             });
           }
 
@@ -51,4 +51,4 @@ const verifyIsAdminMiddleware = (request, response, next) => {
   });
 };
 
-export default verifyIsAdminMiddleware;
+export default verifyIsOnlyUserMiddleware;

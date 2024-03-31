@@ -47,7 +47,7 @@ export const Login = () => {
           />
         </FormGroup>
         <FormGroup>
-          <Label>Password:</Label>
+          <Label>Senha:</Label>
           <Input
             type="password"
             value={password}

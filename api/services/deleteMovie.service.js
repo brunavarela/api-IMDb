@@ -1,28 +1,17 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
 
-const deleteMovieService = (movie_Id) => {
-
+const deleteMovieService = (movie_id) => {
   return new Promise((resolve, reject) => {
-    
-    mysql.getConnection((error, conn) => {
-      if (error) {
-        console.error("Erro ao obter conexão:", error);
-        return reject(error);
-      }
-
-      conn.query(
-        "DELETE FROM movies WHERE movie_id = ?",
-        [movie_Id],
-        (error, result, field) => {
-          conn.release();
-          if (error) {
-            console.error("Erro ao excluir filme:", error);
-            return reject(error);
-          }
-          resolve({ mensagem: "Filme excluído com sucesso" });
-        }
-      );
-    });
+    knex("movies")
+      .where("movie_id", movie_id)
+      .del()
+      .then((result) => {
+        resolve({ mensagem: "Filme excluído com sucesso" });
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir filme:", error);
+        reject(error);
+      });
   });
 };
 

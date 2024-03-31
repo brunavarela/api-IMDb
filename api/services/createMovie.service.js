@@ -1,30 +1,22 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
+import * as uuid from "uuid";
 
 const createMovieService = (title, director, cast, genre, resume) => {
+  const movieId = uuid.v4();
 
   return new Promise((resolve, reject) => {
-    mysql.getConnection((error, conn) => {
-      if (error) {
-        console.error("Erro ao obter conexão:", error);
-        return reject(error);
-      }
-
-      conn.query(
-        "INSERT INTO movies (title, director, cast, genre, resume) VALUES (?, ?, ?, ?, ?)",
-        [title, director, cast, genre, resume],
-        (error, result, field) => {
-          conn.release();
-          if (error) {
-            console.error("Erro ao inserir filme:", error);
-            return reject(error);
-          }
-          resolve({
-            mensagem: "Filme inserido com sucesso",
-            id_movie: result.insertId,
-          });
-        }
-      );
-    });
+    knex("movies")
+      .insert({ movie_id: movieId, title, director, cast, genre, resume })
+      .then(() => {
+        resolve({
+          mensagem: "Filme inserido com sucesso",
+          id_movie: movieId,
+        });
+      })
+      .catch((error) => {
+        console.error("Erro ao inserir filme:", error);
+        reject(error);
+      });
   });
 };
 

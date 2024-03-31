@@ -1,25 +1,17 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
 
 const listMoviesService = () => {
   return new Promise((resolve, reject) => {
-    mysql.getConnection((error, conn) => {
-      if (error) {
-        console.error("Erro ao obter conexão:", error);
-        return reject(error);
-      }
-
-      conn.query(
-        "SELECT * FROM movies",
-        (error, results, fields) => {
-          conn.release();
-          if (error) {
-            console.error("Erro ao listar filmes:", error);
-            return reject(error);
-          }
-          resolve(results);
-        }
-      );
-    });
+    knex
+      .select("*")
+      .from("movies")
+      .then((results) => {
+        resolve(results);
+      })
+      .catch((error) => {
+        console.error("Erro ao listar filmes:", error);
+        reject(error);
+      });
   });
 };
 

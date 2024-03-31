@@ -1,25 +1,17 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
 
 const listUsersService = () => {
   return new Promise((resolve, reject) => {
-    mysql.getConnection((error, conn) => {
-      if (error) {
-        console.error("Erro ao obter conexão:", error);
-        return reject(error);
-      }
-
-      conn.query(
-        "SELECT id, name, email, password, CAST(isAdmin AS UNSIGNED) AS isAdmin FROM users",
-        (error, results) => {
-          conn.release();
-          if (error) {
-            console.error("Erro ao listar usuários:", error);
-            return reject(error);
-          }
-          resolve(results);
-        }
-      );
-    });
+    knex
+      .select("user_id", "name", "email", "isAdmin")
+      .from("users")
+      .then((results) => {
+        resolve(results);
+      })
+      .catch((error) => {
+        console.error("Erro ao listar usuários:", error);
+        reject(error);
+      });
   });
 };
 

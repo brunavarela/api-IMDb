@@ -4,6 +4,7 @@
     "MYSQL_PASSWORD": "brunadev12",
     "MYSQL_DATABASE": "api-imdb",
     "MYSQL_HOST": "localhost",
-    "MYSQL_PORT": 3306
+    "MYSQL_PORT": 3306,
+    "MYSQL_CLIENT": "mysql"
   }
 }

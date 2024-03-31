@@ -1,26 +1,25 @@
-import { pool as mysql } from "../database/mysql.js";
+import knex from "../config/database.js";
 
-const updateMovieService = (title, director, cast, genre, resume, movie_Id) => {
+const updateMovieService = (
+  title,
+  director,
+  cast,
+  genre,
+  resume,
+  image,
+  movie_id
+) => {
   return new Promise((resolve, reject) => {
-    mysql.getConnection((error, conn) => {
-      if (error) {
-        console.error("Erro ao obter conexão:", error);
-        return reject(error);
-      }
-
-      conn.query(
-        "UPDATE movies SET title = ?, director = ?, cast = ?, genre = ?, resume = ? WHERE movie_id = ?",
-        [title, director, cast, genre, resume, movie_Id],
-        (error, result) => {
-          conn.release();
-          if (error) {
-            console.error("Erro ao atualizar filme:", error);
-            return reject(error);
-          }
-          resolve(result);
-        }
-      );
-    });
+    knex("movies")
+      .where("movie_id", movie_id)
+      .update({ title, director, cast, genre, resume, image })
+      .then((result) => {
+        resolve(result);
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar filme:", error);
+        reject(error);
+      });
   });
 };
 

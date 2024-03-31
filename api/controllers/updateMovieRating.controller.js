@@ -7,10 +7,10 @@ const updateMovieRatingController = async (request, response) => {
 
     const result = await updateMovieRatingService(movie_id, rating);
 
-    if (result.affectedRows > 0) {
+    if (result) {
       return response
         .status(200)
-        .json({ message: "Rating do filme atualizado com sucesso" });
+        .json({ message: "Nota do filme atualizado com sucesso" });
     } else {
       return response.status(404).json({ message: "Filme não encontrado" });
     }
