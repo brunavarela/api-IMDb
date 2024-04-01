@@ -10,23 +10,17 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 20px;
-`;
-
-export const Title = styled.h1`
-  color: #fff;
+  width: 100vw;
 `;
 
 export const Content = styled.div`
-  max-width: 1200px; /* Definindo uma largura máxima para o conteúdo */
-  width: 100%;
-  margin-top: 20px; /* Espaçamento superior */
-  display: flex; /* Adicionando flexbox */
-  justify-content: center; /* Centralizando horizontalmente */
+  width: 100vw;
+  margin-top: 20px;
+  display: flex; 
+  justify-content: center; 
 `;
 
 export const SubTitle = styled.h2`
   color: #fff;
-  margin-bottom: 20px; /* Espaçamento inferior */
+  margin-bottom: 20px; 
 `;
