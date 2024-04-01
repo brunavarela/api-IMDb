@@ -1,12 +1,12 @@
 import knex from "../config/database.js";
 import * as uuid from "uuid";
 
-const createMovieService = (title, director, cast, genre, resume) => {
+const createMovieService = (title, director, cast, genre, resume, image) => {
   const movieId = uuid.v4();
 
   return new Promise((resolve, reject) => {
     knex("movies")
-      .insert({ movie_id: movieId, title, director, cast, genre, resume })
+      .insert({ movie_id: movieId, title, director, cast, genre, resume, image })
       .then(() => {
         resolve({
           mensagem: "Filme inserido com sucesso",
