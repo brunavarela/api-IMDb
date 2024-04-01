@@ -45,7 +45,7 @@ A autenticação é necessária para acessar os endpoints da API. Um token JWT d
     "isAdmin": 1
   }
 ]
-
+````
 #### Lista de Filmes:
 ```json
 [
@@ -75,7 +75,7 @@ A autenticação é necessária para acessar os endpoints da API. Um token JWT d
   }
 ]
 
-
+````
 #### Criação de Filmes: 
 ```json
 {
@@ -89,7 +89,7 @@ A autenticação é necessária para acessar os endpoints da API. Um token JWT d
   "status": 200,
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZhbmVzc2FhcXVpbm9AZW1haWwuY29tIiwiaXNBZG1pbiI6MCwiaWF0IjoxNzExOTEzMDUzLCJleHAiOjE3MTE5OTk0NTMsInN1YiI6IjAxY2U3NTZlLTU4MWYtNGZhMC1hNTgxLWUyYzg2ZWI0YmE4YyJ9.A3NNrkGfYCZT3zYuy-mHZp2NqhJAaemnyce-W5DjTH0"
 }
-
+```
 #### Criação de usuário:
 ```json
 {
@@ -98,6 +98,7 @@ A autenticação é necessária para acessar os endpoints da API. Um token JWT d
   "email": "bruna@email.com",
   "isAdmin": true
 }
+```
 
 #### Iniciando o projeto
 
