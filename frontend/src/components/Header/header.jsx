@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import { Modal } from "../Modal/modal.jsx";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,10 +25,10 @@ export const Header = () => {
     image: "",
   });
 
-  const [token, setToken] = useState(""); // Estado para armazenar o token
+  const [token, setToken] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Verifica se há um token salvo no localStorage ao carregar a página
     const storedToken = localStorage.getItem("Token");
     if (storedToken) {
       console.log("Token recuperado:", storedToken);
@@ -51,10 +52,14 @@ export const Header = () => {
     }));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("Token");
+    navigate("/");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Envia a solicitação com o token no cabeçalho Authorization
       await axios.post("http://localhost:3000/movies", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -82,7 +87,7 @@ export const Header = () => {
         </DivTitle>
         <DivContent>
           <Text onClick={handleOpenModal}>Adicionar filme</Text>
-          <Text>Sair</Text>
+          <Text onClick={handleLogout}>Sair</Text>
         </DivContent>
       </DivHeader>
 
